@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "langgraph-prototyping"
+version = "0.1.0"
+description = ""
+authors = ["Tim Child <timjchild@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langgraph-cli = "^0.1.52"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
