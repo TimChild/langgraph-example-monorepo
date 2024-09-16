@@ -7,47 +7,52 @@ FROM mcr.microsoft.com/devcontainers/base:bullseye as base
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=vscode
 ARG HOME="/home/$USER"
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.12.6
 
 ENV PYTHONFAULTHANDLER=1 \
-     PYTHONUNBUFFERED=1 \
-     PYTHONHASHSEED=random \
-     PIP_NO_CACHE_DIR=off \
-     PIP_DISABLE_PIP_VERSION_CHECK=on \
-     PIP_DEFAULT_TIMEOUT=100 \
-     # Poetry's configuration:
-     POETRY_NO_INTERACTION=1 \
-     POETRY_VIRTUALENVS_CREATE=false \
-     POETRY_CACHE_DIR="${HOME}/.cache/pypoetry" \
-     PYENV_ROOT="${HOME}/.pyenv" \
-     # For pytest-pretty to display wider
-     COLUMNS=120
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    # Poetry's configuration:
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_CACHE_DIR="${HOME}/.cache/pypoetry" \
+    PYENV_ROOT="${HOME}/.pyenv" \
+    # For pytest-pretty to display wider
+    COLUMNS=120
 
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y build-essential --no-install-recommends make \
-        ca-certificates \
-        git \
-        libssl-dev \
-        zlib1g-dev \
-        libbz2-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        wget \
-        curl \
-        llvm \
-        libncurses5-dev \
-        xz-utils \
-        tk-dev \
-        libxml2-dev \
-        libxmlsec1-dev \
-        libffi-dev \
-        liblzma-dev \
-        entr
+    ca-certificates \
+    git \
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    wget \
+    curl \
+    llvm \
+    libncurses5-dev \
+    xz-utils \
+    tk-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libffi-dev \
+    liblzma-dev \
+    entr
 
 # Python and poetry installation
 USER $USER
-ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${HOME}/.local/bin:$PATH"
+ENV PATH \
+${PYENV_ROOT}/shims:\
+${PYENV_ROOT}/bin:\
+${HOME}/.local/bin:\
+${PYENV_ROOT}/versions/${PYTHON_VERSION}/bin\
+:$PATH
 
 RUN echo "done 0" \
     && curl https://pyenv.run | bash \
@@ -68,4 +73,4 @@ WORKDIR $HOME
 #     playwright install chromium --with-deps
 
 COPY pyproject.toml poetry.lock* initial_deps/
-RUN cd initial_deps && poetry install --with test --no-root
+RUN cd initial_deps && poetry install --no-root
