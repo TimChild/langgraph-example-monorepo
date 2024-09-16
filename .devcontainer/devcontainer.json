@@ -30,7 +30,12 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"python.defaultInterpreterPath": "/home/vscode/.pyenv/shims/python"
+				"python.defaultInterpreterPath": "/home/vscode/.pyenv/shims/python",
+				"python.testing.pytestArgs": [
+					"tests"
+				],
+				"python.testing.unittestEnabled": false,
+				"python.testing.pytestEnabled": true
 			},
 			"extensions": [
 				"tamasfe.even-better-toml",
