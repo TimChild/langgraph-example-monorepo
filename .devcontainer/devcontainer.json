@@ -27,9 +27,6 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "poetry install",
 	// Configure tool-specific properties.
-	"containerEnv": {
-		"LANGSMITH_API_KEY": "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"
-	},
 	"customizations": {
 		"vscode": {
 			"settings": {
